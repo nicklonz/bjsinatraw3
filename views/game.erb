@@ -1,5 +1,5 @@
 <h3>Welcome <%= session[:player_name] %> to Blackjack!</h3>
-<h5>By NPL</h5>
+<h5>By <a href="https://github.com/streetrader/bjsinatraw3">NPL</a></h5>
 <br>
 
 <ul>
@@ -18,3 +18,22 @@ Dealer's cards:
 	<% end %>
 
 </ul>
+
+<p>
+  What would you like to do?
+
+<%= session[:player_name] %> has <%= calculate_total(session[:player_cards]) %>
+
+<% if @show_hit_or_stay_buttons %>
+
+<form action="/game/player/hit" method='post'>
+	<input type="submit" class="btn" value="Hit"/>
+
+	</form> 
+
+<form action="/game/player/stay" method='post'>
+	<input type="submit" class="btn" value="Stay"/>
+
+	</form>
+<%end%>
+</p>

@@ -5,6 +5,34 @@ require 'pry'
 
 set :sessions, true
 
+# helpers work in main.erb and views pages
+helpers do 
+  def calculate_total(cards) # cards is [["H", "3"], ["D", "J"], ... ]
+    arr = cards.map{|element| element[1]}
+
+    total = 0
+    arr.each do |a|
+      if a == "A"
+        total += 11
+      else
+        total += a.to_i == 0 ? 10 : a.to_i
+      end
+    end
+
+    #correct for Aces
+    arr.select{|element| element == "A"}.count.times do
+      break if total <= 21
+      total -= 10
+    end
+
+    total
+  end
+end
+
+before do
+  @show_hit_or_stay_buttons = true
+end
+
 get '/' do
 if session[:player_name]
 	redirect '/game'
